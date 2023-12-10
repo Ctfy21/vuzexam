@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vuzexam/cubit/data_cubit.dart';
@@ -12,7 +14,7 @@ Future main() async {
   databaseFactory = databaseFactoryFfi;
   final val = await DataDatabase.instance.readAllData();
   val.forEach((element) {
-    print(element.localizedName);
+    print(jsonDecode(element.roles));
   },);
   runApp(const MyApp());
 }
