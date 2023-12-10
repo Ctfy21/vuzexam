@@ -28,6 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  provider:
+  flutter_riverpod:
+  flutter_bloc:
+  shared_preferences:
   http:
   flutter:
     sdk: flutter

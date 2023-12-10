@@ -1,36 +1,73 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:vuzexam/home.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vuzexam/cubit/data_cubit.dart';
+import 'package:vuzexam/func/get_data_from_url.dart';
+import 'package:vuzexam/view/home.dart';
+import 'package:vuzexam/view/load.dart';
 
-void main(){
+void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
-  Widget build(BuildContext context){
-    return MaterialApp(
-        home: AnimatedSplashScreen.withScreenFunction(
-          splash: Icons.home,
-          duration: 0,
-          splashTransition: SplashTransition.fadeTransition,
-          screenFunction: () async{
-            print('fetching');
-            const url = 'https://api.opendota.com/api/heroes';
-            final uri = Uri.parse(url);
-            final response = await http.get(uri);
-            final body = response.body;
-            final json = jsonDecode(body);              
-            return MyHomePage(heroes: json);
-          })
+  Widget build(BuildContext context) {
+  final cubitData = DataCubit();
+  // await cubitData.putDataFromUrl('https://api.opendota.com/api/heroes');
+    return BlocProvider(
+      create: (context) => cubitData,
+      child: MaterialApp(
+          home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Rest API'),
+            ),
+            body: FutureBuilder<List<dynamic>>(
+              future: getDataFromUrl('https://api.opendota.com/api/heroes'), // a previously-obtained Future<String> or null
+              builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                if(snapshot.hasData){
+                  cubitData.putData(snapshot.data!);
+                  return const MyHomePage();
+                }
+                else{
+                  return const MyLoadPage();
+                }
+              },
+            ),
+          ),
+      ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import 'package:animated_splash_screen/animated_splash_screen.dart';
 // import 'package:flutter/material.dart';
