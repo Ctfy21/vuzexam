@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vuzexam/cubit/data_cubit.dart';
+import 'package:vuzexam/db/database.dart';
 import 'package:vuzexam/func/get_data_from_url.dart';
 import 'package:vuzexam/view/home.dart';
 import 'package:vuzexam/view/load.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
+Future main() async {
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+  final val = await DataDatabase.instance.readAllData();
+  val.forEach((element) {
+    print(element.localizedName);
+  },);
   runApp(const MyApp());
 }
 
@@ -20,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           home: Scaffold(
             appBar: AppBar(
-              title: const Text('Rest API'),
+              title: const Text('Dota App'),
             ),
             body: FutureBuilder<List<dynamic>>(
               future: getDataFromUrl('https://api.opendota.com/api/heroes'), // a previously-obtained Future<String> or null
