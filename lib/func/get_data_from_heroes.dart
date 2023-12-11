@@ -12,7 +12,7 @@ Future<List<Data>> getDataHeroes(String url) async {
 
   print('fetching');
   final uri = Uri.parse(url);
-  try{
+  // try{
     final response = await http.get(uri);
     if(response.statusCode == 200){
       final body = response.body;
@@ -20,10 +20,10 @@ Future<List<Data>> getDataHeroes(String url) async {
       List<Data> dataVal = await Future.wait(json.map((data) async => await Data.fromJsonApi(data)).toList());
       return dataVal;  
     }
-  }
-  catch (e){
-    print(e.toString());
-  }
+  // }
+  // catch (e){
+  //   print(e.toString());
+  // }
   final dbPath = await getDatabasesPath();
   final path = join(dbPath, DataDatabase.instance.databaseName);
   final boolDBExists = await databaseFactory.databaseExists(path);

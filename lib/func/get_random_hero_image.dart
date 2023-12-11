@@ -6,18 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> getRamdomHeroImage(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? savedData = prefs.getString('dataImagesURLs');
+    String? savedData = prefs.getString('dataImagesURL');
     if(savedData == null){
       final uri = Uri.parse(url);
       final response = await http.get(uri);
-      final body = response.body;
-      List<dynamic> json = jsonDecode(body);
+      String body = response.body;
+      List<dynamic> json = jsonDecode(body) as List;
       List<String> tempImagesURLs = [];
       json.forEach((element) {
         tempImagesURLs.add(element['avatarmedium']);
       });
       final result = jsonEncode(tempImagesURLs);
-      await prefs.setString('dataImagesURLs', result);
+      await prefs.setString('dataImagesURL', result);
       savedData = result;
     }
     List<String> imagesURLs = jsonDecode(savedData);

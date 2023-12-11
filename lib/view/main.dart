@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   final cubitData = DataCubit();
-  // await cubitData.putDataFromUrl('https://api.opendota.com/api/heroes');
     return BlocProvider(
       create: (context) => cubitData,
       child: MaterialApp(
