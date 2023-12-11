@@ -10,7 +10,9 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 Future main() async {
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
-
+  // final dbPath = await getDatabasesPath();
+  // final path = join(dbPath, DataDatabase.instance.databaseName);
+  // await databaseFactory.deleteDatabase(path);
   runApp(const MyApp());
 }
 

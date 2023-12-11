@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:vuzexam/func/get_random_hero_image.dart';
+
 const String tableData = 'data';
 
 class DataFields {
 
- static final List<String> values = [id, name, localizedName, primaryAttr, attackType, roles, legs];
+ static final List<String> values = [id, name, localizedName, primaryAttr, attackType, roles, legs, image];
 
  static const String id = '_id';
  static const String name = 'name';
@@ -13,16 +15,18 @@ class DataFields {
  static const String attackType = 'attackType';
  static const String roles = 'roles';
  static const String legs = 'legs';
+ static const String image = 'image';
 }
 
 class DataFieldsApi {
-  static const String id = 'id';
+ static const String id = 'id';
  static const String name = 'name';
  static const String localizedName = 'localized_name';
  static const String primaryAttr = 'primary_attr';
  static const String attackType = 'attack_type';
  static const String roles = 'roles';
  static const String legs = 'legs';
+ static const String image = 'image';
 }
 
 class Data {
@@ -33,6 +37,7 @@ class Data {
   final String attackType;
   final String roles;
   final int legs;
+  final String image;
 
 
   const Data({
@@ -42,7 +47,8 @@ class Data {
     required this.primaryAttr,
     required this.attackType,
     required this.roles,
-    required this.legs
+    required this.legs,
+    required this.image
   });
 
   Data copy({
@@ -53,6 +59,7 @@ class Data {
   String? attackType,
   String? roles,
   int? legs,
+  String? image,
   }) =>
       Data(
         id: id ?? this.id,
@@ -62,6 +69,7 @@ class Data {
         attackType: attackType ?? this.attackType,
         roles: roles ?? this.roles,
         legs: legs ?? this.legs,
+        image: image ?? this.image,
       );
 
       static Data fromJson(Map<String, Object?> json) => Data(
@@ -72,9 +80,10 @@ class Data {
         attackType: json[DataFields.attackType] as String,
         roles: json[DataFields.roles] as String,
         legs: json[DataFields.legs] as int,
+        image: json[DataFields.image] as String,
       );
 
-      static Data fromJsonApi(Map<String, Object?> json) => Data(
+      static Future<Data> fromJsonApi(Map<String, Object?> json) async => Data(
         id: json[DataFieldsApi.id] as int?,
         name: json[DataFieldsApi.name] as String,
         localizedName: json[DataFieldsApi.localizedName] as String,
@@ -82,6 +91,7 @@ class Data {
         attackType: json[DataFieldsApi.attackType] as String,
         roles: jsonEncode(json[DataFieldsApi.roles]),
         legs: json[DataFieldsApi.legs] as int,
+        image: await getRamdomHeroImage('https://api.opendota.com/api/proPlayers'),
       );
 
 
@@ -93,5 +103,6 @@ class Data {
         DataFields.attackType: attackType,
         DataFields.roles: jsonEncode(roles),
         DataFields.legs: legs,
+        DataFields.image: image,
       };
 }

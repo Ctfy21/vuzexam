@@ -22,7 +22,7 @@ class DataDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 2, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -39,7 +39,8 @@ CREATE TABLE $tableData (
   ${DataFields.primaryAttr} $textType,
   ${DataFields.attackType} $textType,
   ${DataFields.roles} $jsonType,
-  ${DataFields.legs} $integerType
+  ${DataFields.legs} $integerType,
+  ${DataFields.image} $textType
   )
 ''');
   }
@@ -88,6 +89,7 @@ CREATE TABLE $tableData (
       whereArgs: [data.id],
     );
   }
+
 
   Future<int> delete(int id) async {
     final db = await instance.database;

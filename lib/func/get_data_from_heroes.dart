@@ -17,7 +17,7 @@ Future<List<Data>> getDataHeroes(String url) async {
     if(response.statusCode == 200){
       final body = response.body;
       final json = jsonDecode(body) as List;
-      List<Data> dataVal = json.map((data) => Data.fromJsonApi(data)).toList();
+      List<Data> dataVal = await Future.wait(json.map((data) async => await Data.fromJsonApi(data)).toList());
       return dataVal;  
     }
   }

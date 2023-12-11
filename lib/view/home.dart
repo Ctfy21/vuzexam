@@ -13,7 +13,18 @@ class MyHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           itemCount: model.state.length,
           itemBuilder: (context, index) {
-            return Text(model.state[index].localizedName);
+            return Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12)
+              ),
+              child: Row(
+                children: [
+                  Image.network(model.state[index].image),
+                  Text(model.state[index].localizedName)
+                ],
+              )
+            );
           },
         ) 
       );
