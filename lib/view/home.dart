@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vuzexam/cubit/data_cubit.dart';
@@ -20,7 +22,7 @@ class MyHomePage extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Image.network(model.state[index].image),
+                  Image.memory(base64Decode(model.state[index].image)),
                   Text(model.state[index].localizedName)
                 ],
               )

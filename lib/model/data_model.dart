@@ -91,7 +91,7 @@ class Data {
         attackType: json[DataFieldsApi.attackType] as String,
         roles: jsonEncode(json[DataFieldsApi.roles]),
         legs: json[DataFieldsApi.legs] as int,
-        image: await getRamdomHeroImage('https://api.opendota.com/api/proPlayers'),
+        image: await getRandomHeroImage('http://localhost:8000/pro_players'),
       );
 
 

@@ -10,9 +10,6 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 Future main() async {
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
-  // final dbPath = await getDatabasesPath();
-  // final path = join(dbPath, DataDatabase.instance.databaseName);
-  // await databaseFactory.deleteDatabase(path);
   runApp(const MyApp());
 }
 
@@ -29,7 +26,7 @@ class MyApp extends StatelessWidget {
               title: const Text('Dota App'),
             ),
             body: FutureBuilder<List<Data>>(
-              future: getDataHeroes('https://api.opendota.com/api/heroes'), // a previously-obtained Future<String> or null
+              future: getDataHeroes('http://localhost:8000/heroes'), // a previously-obtained Future<String> or null
               builder: (BuildContext context, AsyncSnapshot<List<Data>> snapshot) {
                 if(snapshot.hasData){
                   cubitData.putData(snapshot.data!);
