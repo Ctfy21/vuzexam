@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vuzexam/cubit/data_cubit.dart';
-import 'package:vuzexam/db/database.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -14,7 +13,7 @@ class MyHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           itemCount: model.state.length,
           itemBuilder: (context, index) {
-            return Text(model.state[index]['localized_name']);
+            return Text(model.state[index].localizedName);
           },
         ) 
       );

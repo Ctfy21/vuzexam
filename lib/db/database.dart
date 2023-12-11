@@ -5,6 +5,8 @@ import '../model/data_model.dart';
 class DataDatabase {
   static final DataDatabase instance = DataDatabase._init();
 
+  final databaseName = 'data.db';
+
   static Database? _database;
 
   DataDatabase._init();
@@ -12,7 +14,7 @@ class DataDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('data.db');
+    _database = await _initDB(databaseName);
     return _database!;
   }
 

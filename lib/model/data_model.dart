@@ -15,6 +15,16 @@ class DataFields {
  static const String legs = 'legs';
 }
 
+class DataFieldsApi {
+  static const String id = 'id';
+ static const String name = 'name';
+ static const String localizedName = 'localized_name';
+ static const String primaryAttr = 'primary_attr';
+ static const String attackType = 'attack_type';
+ static const String roles = 'roles';
+ static const String legs = 'legs';
+}
+
 class Data {
   final int? id;
   final String name;
@@ -63,6 +73,17 @@ class Data {
         roles: json[DataFields.roles] as String,
         legs: json[DataFields.legs] as int,
       );
+
+      static Data fromJsonApi(Map<String, Object?> json) => Data(
+        id: json[DataFieldsApi.id] as int?,
+        name: json[DataFieldsApi.name] as String,
+        localizedName: json[DataFieldsApi.localizedName] as String,
+        primaryAttr: json[DataFieldsApi.primaryAttr] as String,
+        attackType: json[DataFieldsApi.attackType] as String,
+        roles: jsonEncode(json[DataFieldsApi.roles]),
+        legs: json[DataFieldsApi.legs] as int,
+      );
+
 
   Map<String, Object?> toJson() => {
         DataFields.id: id,
