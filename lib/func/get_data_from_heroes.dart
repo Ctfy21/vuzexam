@@ -28,6 +28,7 @@ Future<List<Data>> getDataHeroes(String url) async {
       dataVal.sort((a, b) {
         return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       });
+      print("Internet");
       return dataVal;  
     }
   }
@@ -36,6 +37,7 @@ Future<List<Data>> getDataHeroes(String url) async {
   }
   final boolDBExists = await databaseFactory.databaseExists(path);
   if(boolDBExists){
+    print("Database");
     return DataDatabase.instance.readAllData();
   }
   else{

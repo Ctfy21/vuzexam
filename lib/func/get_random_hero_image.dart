@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vuzexam/globals/globals.dart';
 
 Future<String> getRandomHeroImage(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? savedData = prefs.getString('ImURLs');
+    String? savedData = prefs.getString(Globals.prefsSavedData);
     if(savedData == null){
       final uri = Uri.parse(url);
       final response = await http.get(uri);
@@ -19,15 +20,13 @@ Future<String> getRandomHeroImage(String url) async {
         }
       });
       final result = jsonEncode(tempImagesURLs);
-      await prefs.setString('ImURLs', result);
+      await prefs.setString(Globals.prefsSavedData, result);
       savedData = result;
     }
     List<dynamic> tempData = jsonDecode(savedData);
     List<String> imagesURLs = tempData.map((value) => value as String).toList();
-    int? index = prefs.getInt('index');
-    index ??= 0;
+    int? index = Globals.getIndex(imagesURLs);
     String imageUrlString = imagesURLs[index];
-    await prefs.setInt('index', ((index + 1) % (imagesURLs.length - 1)));
     Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imageUrlString)).load(imageUrlString)).buffer.asUint8List();
     String imageBytes = base64Encode(bytes);
     return imageBytes;  

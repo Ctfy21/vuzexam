@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:vuzexam/func/get_random_hero_image.dart';
+import 'package:vuzexam/globals/globals.dart';
 
 const String tableData = 'data';
 
