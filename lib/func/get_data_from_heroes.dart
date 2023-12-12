@@ -17,6 +17,7 @@ Future<List<Data>> getDataHeroes(String url) async {
       final body = response.body;
       final json = jsonDecode(body) as List;
       List<Data> dataVal = await Future.wait(json.map((data) async => await Data.fromJsonApi(data)).toList());
+      dataVal.sort();
       return dataVal;  
     }
   }
