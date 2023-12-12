@@ -1,8 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:path/path.dart';
 import 'package:vuzexam/cubit/data_cubit.dart';
-// import 'package:vuzexam/db/database.dart';
 import 'package:vuzexam/func/get_data_from_heroes.dart';
 import 'package:vuzexam/model/data_model.dart';
 import 'package:vuzexam/view/home.dart';
@@ -10,16 +10,16 @@ import 'package:vuzexam/view/load.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 Future main() async {
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
-  // final dbPath = await getDatabasesPath();
-  // final path = join(dbPath, DataDatabase.instance.databaseName);
-  // await databaseFactory.deleteDatabase(path);
+  if(Platform.isWindows){
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
               title: const Text('Dota App'),
             ),
             body: FutureBuilder<List<Data>>(
-              future: getDataHeroes('https://api.opendota.com/api/heroes'), // a previously-obtained Future<String> or null
+              future: getDataHeroes('http://apiforexamflutter-ajzg293a.b4a.run/heroes'), // a previously-obtained Future<String> or null
               builder: (BuildContext context, AsyncSnapshot<List<Data>> snapshot) {
                 if(snapshot.hasData){
                   cubitData.putData(snapshot.data!);

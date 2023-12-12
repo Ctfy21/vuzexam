@@ -11,7 +11,7 @@ class MyDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    List<dynamic> jsonRoles = jsonDecode(jsonDecode(data.roles));
+    List<dynamic> jsonRoles = jsonDecode(data.roles);
     List<String> resultRoles = jsonRoles.map((value) => value as String).toList();
 
     return Scaffold(

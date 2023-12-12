@@ -78,7 +78,7 @@ class Data {
         localizedName: json[DataFields.localizedName] as String,
         primaryAttr: json[DataFields.primaryAttr] as String,
         attackType: json[DataFields.attackType] as String,
-        roles: json[DataFields.roles] as String,
+        roles: jsonDecode(json[DataFields.roles] as String),
         legs: json[DataFields.legs] as int,
         image: json[DataFields.image] as String,
       );
@@ -91,7 +91,7 @@ class Data {
         attackType: json[DataFieldsApi.attackType] as String,
         roles: jsonEncode(json[DataFieldsApi.roles]),
         legs: json[DataFieldsApi.legs] as int,
-        image: await getRandomHeroImage('http://localhost:8000/pro_players'),
+        image: await getRandomHeroImage('http://apiforexamflutter-ajzg293a.b4a.run/pro_players'),
       );
 
 
