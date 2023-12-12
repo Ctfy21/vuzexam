@@ -29,7 +29,7 @@ Future<List<Data>> getDataHeroes(String url) async {
       final uriImages = Uri.parse(Globals.imagesUrl);
       final responseImages = await http.get(uriImages);
       String bodyImages = responseImages.body;
-      
+
       List<Data> dataVal = await Future.wait(json.map((data) async => await Data.fromJsonApi(data, bodyImages)).toList());
       dataVal.sort((a, b) {
         return a.name.toLowerCase().compareTo(b.name.toLowerCase());
