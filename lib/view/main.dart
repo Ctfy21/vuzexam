@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vuzexam/cubit/data_cubit.dart';
 import 'package:vuzexam/func/get_data_from_heroes.dart';
+import 'package:vuzexam/globals/globals.dart';
 import 'package:vuzexam/model/data_model.dart';
 import 'package:vuzexam/view/home.dart';
 import 'package:vuzexam/view/load.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
               title: const Text('Dota App'),
             ),
             body: FutureBuilder<List<Data>>(
-              future: getDataHeroes('http://apiforexamflutter-ajzg293a.b4a.run/heroes'), // a previously-obtained Future<String> or null
+              future: getDataHeroes(Globals.heroesUrl), // a previously-obtained Future<String> or null
               builder: (BuildContext context, AsyncSnapshot<List<Data>> snapshot) {
                 if(snapshot.hasData){
                   cubitData.putData(snapshot.data!);

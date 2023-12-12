@@ -1,17 +1,13 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vuzexam/globals/globals.dart';
 
-Future<String> getRandomHeroImage(String url) async {
+Future<String> getRandomHeroImage(String body) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedData = prefs.getString(Globals.prefsSavedData);
     if(savedData == null){
-      final uri = Uri.parse(url);
-      final response = await http.get(uri);
-      String body = response.body;
       List<dynamic> json = jsonDecode(body) as List;
       List<String> tempImagesURLs = [];
       json.forEach((element) {

@@ -7,6 +7,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'dart:convert';
 
 import 'package:vuzexam/db/database.dart';
+import 'package:vuzexam/globals/globals.dart';
 import 'package:vuzexam/model/data_model.dart';
 
 Future<List<Data>> getDataHeroes(String url) async {
@@ -24,7 +25,12 @@ Future<List<Data>> getDataHeroes(String url) async {
     if(response.statusCode == 200){
       final body = response.body;
       final json = jsonDecode(body) as List;
-      List<Data> dataVal = await Future.wait(json.map((data) async => await Data.fromJsonApi(data)).toList());
+
+      final uriImages = Uri.parse(Globals.imagesUrl);
+      final responseImages = await http.get(uriImages);
+      String bodyImages = responseImages.body;
+      
+      List<Data> dataVal = await Future.wait(json.map((data) async => await Data.fromJsonApi(data, bodyImages)).toList());
       dataVal.sort((a, b) {
         return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       });
@@ -37,7 +43,7 @@ Future<List<Data>> getDataHeroes(String url) async {
   }
   final boolDBExists = await databaseFactory.databaseExists(path);
   if(boolDBExists){
-    print("Database");
+    print("database");
     return DataDatabase.instance.readAllData();
   }
   else{

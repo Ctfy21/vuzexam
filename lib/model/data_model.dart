@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:vuzexam/func/get_random_hero_image.dart';
-import 'package:vuzexam/globals/globals.dart';
 
 const String tableData = 'data';
 
@@ -84,7 +83,7 @@ class Data {
         image: json[DataFields.image] as String,
       );
 
-      static Future<Data> fromJsonApi(Map<String, Object?> json) async => Data(
+      static Future<Data> fromJsonApi(Map<String, Object?> json, String body) async => Data(
         id: json[DataFieldsApi.id] as int?,
         name: json[DataFieldsApi.name] as String,
         localizedName: json[DataFieldsApi.localizedName] as String,
@@ -92,7 +91,7 @@ class Data {
         attackType: json[DataFieldsApi.attackType] as String,
         roles: jsonEncode(json[DataFieldsApi.roles]),
         legs: json[DataFieldsApi.legs] as int,
-        image: await getRandomHeroImage('http://apiforexamflutter-ajzg293a.b4a.run/pro_players'),
+        image: await getRandomHeroImage(body),
       );
 
 
